@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 /*
  * Пользователь последовательно вводит целые числа.
@@ -28,16 +29,60 @@ namespace Task2
 {
     class Program
     {
-        // TODO: используйте передачу параметров по ссылке
-        ReadData()
+        static void Main()
         {
-            // TODO: Прочитать вводимые данные
+            Console.OutputEncoding = Encoding.UTF8;
+            ReadData();
         }
-
-
-        static void Main(string[] args)
+        
+        
+        static void ReadData()
         {
-            Console.WriteLine(/* TODO: вывести результат*/);
+            var sum = 0;
+            string value = Console.ReadLine();
+            int num = 0;
+            while (sum >= -1000 && value != "q")
+            {
+                if (!int.TryParse(value, out var x) && value != "q")
+                {
+                    Console.WriteLine("Ошибка");
+                    return;
+                }
+
+                if (x < 0)
+                {
+                    sum += x;
+                    num++;
+                }
+
+                value = Console.ReadLine();
+            }
+
+            if (num == 0)
+            {
+                Console.WriteLine(0);
+                return;
+            }
+
+            var average = (double) sum / num;
+            Console.WriteLine(FindingResult($"{average:f2}"));
+        }
+        
+        static string FindingResult(string result)
+        {
+            int i = result.Length - 1;
+            while (result[i] == '0')
+            {
+                result = result.Substring(0, i);
+                i = result.Length - 1;
+            }
+
+            if (result[i] == '.')
+            {
+                result = result.Substring(0, i);
+            }
+
+            return result;
         }
     }
 }
