@@ -52,13 +52,15 @@ namespace Task3
         {
             const double x = 1;
             Console.OutputEncoding = Encoding.UTF8;
-             
+
             // Parsing a,b,c.
-            if(!double.TryParse(Console.ReadLine(), out var a) || !double.TryParse(Console.ReadLine(), out var b) || !double.TryParse(Console.ReadLine(), out var c))
+            if (!double.TryParse(Console.ReadLine(), out var a) || !double.TryParse(Console.ReadLine(), out var b) ||
+                !double.TryParse(Console.ReadLine(), out var c))
             {
                 Console.WriteLine("Ошибка");
                 return;
             }
+
             FindingResult(a, b, c, x);
         }
 
@@ -67,16 +69,17 @@ namespace Task3
             double res;
             while (x < 1.2)
             {
-                res = a * Math.Pow(x,2) + b * x + c;
+                res = a * Math.Pow(x, 2) + b * x + c;
                 Console.WriteLine(PrintingResult($"{res:f3}"));
                 x += 0.05;
             }
-            res = a / x + Math.Sqrt(Math.Pow(x,2) + 1);
+
+            res = a / x + Math.Sqrt(Math.Pow(x, 2) + 1);
             Console.WriteLine(PrintingResult($"{res:f3}"));
             x += 0.05;
             while (x < 2.05)
             {
-                res = (a + b * x) / Math.Sqrt(Math.Pow(x,2) + 1);
+                res = (a + b * x) / Math.Sqrt(Math.Pow(x, 2) + 1);
                 Console.WriteLine(PrintingResult($"{res:f3}"));
                 x += 0.05;
             }
@@ -85,13 +88,18 @@ namespace Task3
         private static string PrintingResult(string res)
         {
             int i = res.Length - 1;
-          
+
             if (res[i] == '.' && i > 0)
             {
                 res = res.Substring(0, i);
             }
-            
-            
+
+           // nice crutch, I think.
+            while (res[i] == '0' && i > 0)
+            {
+                res = res.Substring(0, i--);
+            }
+
             return res;
         }
     }
