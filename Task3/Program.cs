@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 /*
  * На вход подаются три числа: параметры функции a, b, c
@@ -49,6 +50,57 @@ namespace Task3
 
         static void Main(string[] args)
         {
+            const double x = 1;
+            Console.OutputEncoding = Encoding.UTF8;
+
+            // Parsing a,b,c.
+            if (!double.TryParse(Console.ReadLine(), out var a) || !double.TryParse(Console.ReadLine(), out var b) ||
+                !double.TryParse(Console.ReadLine(), out var c))
+            {
+                Console.WriteLine("Ошибка");
+                return;
+            }
+
+            FindingResult(a, b, c, x);
+        }
+
+        private static void FindingResult(double a, double b, double c, double x)
+        {
+            double res;
+            while (x < 1.2)
+            {
+                res = a * Math.Pow(x, 2) + b * x + c;
+                Console.WriteLine(PrintingResult($"{res:f3}"));
+                x += 0.05;
+            }
+
+            res = a / x + Math.Sqrt(Math.Pow(x, 2) + 1);
+            Console.WriteLine(PrintingResult($"{res:f3}"));
+            x += 0.05;
+            while (x < 2.05)
+            {
+                res = (a + b * x) / Math.Sqrt(Math.Pow(x, 2) + 1);
+                Console.WriteLine(PrintingResult($"{res:f3}"));
+                x += 0.05;
+            }
+        }
+
+        private static string PrintingResult(string res)
+        {
+            int i = res.Length - 1;
+
+            if (res[i] == '.' && i > 0)
+            {
+                res = res.Substring(0, i);
+            }
+
+           // nice crutch, I think.
+            while (res[i] == '0' && i > 0)
+            {
+                res = res.Substring(0, i--);
+            }
+
+            return res;
         }
     }
 }
